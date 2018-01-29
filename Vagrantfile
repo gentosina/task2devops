@@ -1,6 +1,5 @@
 $script1 = <<SCRIPT1
    echo "192.168.1.101 server2" >> /etc/hosts   
-   service network restart
    yum install git -y
    git clone -b task2 https://github.com/gentosina/task2devops.git 
    cd /home/vagrant/task2devops
@@ -9,7 +8,6 @@ SCRIPT1
 
 $script2 = <<SCRIPT2
    echo "192.168.1.100 server1" >> /etc/hosts
-   service network restart
 SCRIPT2
 
 Vagrant.configure("2") do |config|
@@ -29,6 +27,9 @@ Vagrant.configure("2") do |config|
       server2.vm.provision "shell", inline: $script2
      
   end
+ 
+   config.vm.provision "shell", inline: <<-SHELL   	
+      service network restart
+      SHELL
 
-  
 end
