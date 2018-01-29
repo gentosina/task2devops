@@ -1,28 +1,15 @@
 $script1 = <<SCRIPT1
-   sudo echo "192.168.2.2 server2" >> /etc/hosts
-   sudo ip link set enpos8 down
-   sudo echo 'BOOTPROTO="static"' >> /etc/sysconfig/network-scripts/ifcfg-enp0s8
-   sudo echo 'ONBOOT="yes"' >> /etc/sysconfig/network-scripts/ifcfg-enp0s8
-   sudo echo 'IPADDR="192.168.2.1"' >> /etc/sysconfig/network-scripts/ifcfg-enp0s8
-   sudo echo 'NETMASK="255.255.255.0"' >> /etc/sysconfig/network-scripts/ifcfg-enp0s8
-   sudo ip link set enpos8 up
-   sudo service network restart
-   sudo yum install git -y
-   sudo git init
-   sudo git remote add origin https://github.com/gentosina/task2devops.git
-   sudo git clone -b task2 https://github.com/gentosina/task2devops.git 
+   echo "192.168.1.101 server2" >> /etc/hosts   
+   service network restart
+   yum install git -y
+   git clone -b task2 https://github.com/gentosina/task2devops.git 
    cd /home/vagrant/task2devops
    cat test.txt
 SCRIPT1
 
 $script2 = <<SCRIPT2
-   sudo echo "192.168.2.1 server1" >> /etc/hosts
-   sudo echo 'BOOTPROTO="static"' >> /etc/sysconfig/network-scripts/ifcfg-enp0s8
-   sudo echo 'ONBOOT="yes"' >> /etc/sysconfig/network-scripts/ifcfg-enp0s8
-   sudo echo 'IPADDR="192.168.2.2"' >> /etc/sysconfig/network-scripts/ifcfg-enp0s8
-   sudo echo 'NETMASK="255.255.255.0"' >> /etc/sysconfig/network-scripts/ifcfg-enp0s8
-   sudo ip link set enpos8 up
-   sudo service network restart
+   echo "192.168.1.100 server1" >> /etc/hosts
+   service network restart
 SCRIPT2
 
 Vagrant.configure("2") do |config|
