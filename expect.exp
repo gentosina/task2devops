@@ -1,0 +1,7 @@
+#!/usr/bin/expect -f
+spawn ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub vagrant@192.168.1.100
+expect "*re you sure*"
+send "yes\r"
+expect "*passw*"
+send "vagrant\r"
+expect eof
