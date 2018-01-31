@@ -10,11 +10,12 @@ SCRIPT1
 $script2 = <<SCRIPT2
    echo "192.168.1.100 server1" >> /etc/hosts
    yum install expect -y
-   ssh-keygen -N '' -f /home/vagrant/.ssh/id_rsa  
+   ssh-keygen -N '' -f /home/vagrant/.ssh/id_rsa 
    cp /vagrant/expect.exp /tmp/
    expect /tmp/expect.exp
-  
-   
+   cd /home/vagrant/.ssh
+   chown vagrant:vagrant id_rsa 
+   chown vagrant:vagrant id_rsa.pub   
 SCRIPT2
 
 Vagrant.configure("2") do |config|
