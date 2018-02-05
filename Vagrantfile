@@ -5,7 +5,6 @@ $script1 = <<SCRIPT1
    systemctl enable tomcat
    systemctl start tomcat 
    systemctl enable httpd
-   systemctl start httpd
    cp /vagrant/mod_jk.so /etc/httpd/modules/
    cp /vagrant/workers.properties /etc/httpd/conf/
    cp /vagrant/myconf.conf /etc/httpd/conf/
@@ -13,8 +12,7 @@ $script1 = <<SCRIPT1
    cat myconf.conf >> httpd.conf
    firewall-cmd --zone=public --add-port=80/tcp --permanent
    firewall-cmd --reload
-   systemctl stop firewalld 
-   systemctl restart httpd  
+   systemctl start httpd  
 SCRIPT1
 
 $script2 = <<SCRIPT2
@@ -25,7 +23,6 @@ $script2 = <<SCRIPT2
    mkdir /usr/share/tomcat/webapps/task3 
    cd /usr/share/tomcat/webapps/task3
    echo "tomcat1234" >> index.html
-   systemctl stop firewalld
 SCRIPT2
 
 $script3 = <<SCRIPT3
@@ -36,7 +33,6 @@ $script3 = <<SCRIPT3
    mkdir /usr/share/tomcat/webapps/task3 
    cd /usr/share/tomcat/webapps/task3
    echo "tomcat5678" >> index.html
-   systemctl stop firewalld 
 SCRIPT3
 
 Vagrant.configure("2") do |config|
@@ -63,6 +59,6 @@ Vagrant.configure("2") do |config|
   
   config.vm.provision "shell", inline: <<-SHELL   	
       service network restart
-      
+      systemctl stop firewalld
 SHELL
 end
