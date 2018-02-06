@@ -32,23 +32,22 @@ VM = 4
 
 Vagrant.configure("2") do |config|
   
-  config.vm.box = "bertvv/centos72"
-  (1..VM).each do |i|
-    config.vm.define "servertom#{i}" do |subconfig|
+   config.vm.box = "bertvv/centos72"
+   (1..VM).each do |i|
+      config.vm.define "servertom#{i}" do |subconfig|
       subconfig.vm.hostname = "servertom#{i}"
       subconfig.vm.network :private_network, ip: "192.168.1.#{i + 100}"
-      subconfig.vm.provision "shell", inline: $script2, :args => i 
-               
-    end 
-    end
-  config.vm.define "serverlb" do |serverlb|
+      subconfig.vm.provision "shell", inline: $script2, :args => i                
+   end 
+   end
+   config.vm.define "serverlb" do |serverlb|
       serverlb.vm.network  "private_network", ip: "192.168.1.100"
       serverlb.vm.network "forwarded_port", guest: 80, host: 18080
       serverlb.vm.hostname = "serverlb" 
       serverlb.vm.provision "shell", inline: $script1
-  end
+   end
   
-  config.vm.provision "shell", inline: <<-SHELL   	
+   config.vm.provision "shell", inline: <<-SHELL   	
       service network restart
       systemctl stop firewalld
 SHELL
