@@ -1,0 +1,21 @@
+apply plugin: 'war'
+
+repositories {
+mavenCentral()
+}
+
+dependencies {
+compile group: 'log4j', name: 'log4j', version: '1.2.17'
+compile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+}
+
+task updFile << {
+	def file = new File('build/resources/main/greeting.txt')
+	file.append(" "+version+"."+subvers)
+}
+
+task versionUpdate << {
+	ant.propertyfile(file: "gradle.properties") {
+    	entry( key: "subvers", operation: "+", value: "1", type: "int", pattern: "0")
+    }
+}
