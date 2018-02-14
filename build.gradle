@@ -14,14 +14,14 @@ war {
 }
 
 task updFile << {
-	def file = new File('build/resources/main/greeting.txt')
-	file.append(" "+version+"."+subvers)
+        def file = new File('build/resources/main/greeting.txt')
+        file.append(" "+version+"."+subvers)
 }
 
 classes.dependsOn updFile
 
 task versionUpdate << {
-	ant.propertyfile(file: "gradle.properties") {
-    	entry( key: "subvers", operation: "+", value: "1", type: "int", pattern: "0")
+        ant.propertyfile(file: "gradle.properties") {
+        entry( key: "subvers", operation: "+", value: "1", type: "int", pattern: "0")
 }
 }
